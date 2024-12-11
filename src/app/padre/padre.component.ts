@@ -9,5 +9,5 @@ import { HijoComponent } from "./hijo/hijo.component";
   styleUrl: './padre.component.css'
 })
 export class PadreComponent {
-
+  mensajePadre : string = 'Mensaje desde el componente padre';
 }
