@@ -20,5 +20,5 @@ import { ComponenteForComponent } from "./componente-for/componente-for.componen
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Decorador @Input';
+  title = 'Decorador @Output';
 }
