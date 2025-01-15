@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mostrar-mensaje',
@@ -9,11 +10,18 @@ import { Component } from '@angular/core';
 })
 export class MostrarMensajeComponent {
   mensaje: string='';
-  resetearMensaje(){
-    this.mensaje = '';
+  
+  constructor(private route: ActivatedRoute){}
+
+  ngOnInit(){
+    this.mensaje = this.route.snapshot.queryParams['mensaje'];
   }
 
   mostrarMensaje() {
     this.mensaje = 'Hallo , has hecho click en el botón!';
+  }
+
+  resetearMensaje(){
+    this.mensaje = '';
   }
 }
