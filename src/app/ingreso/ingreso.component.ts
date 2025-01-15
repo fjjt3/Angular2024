@@ -17,7 +17,7 @@ export class IngresoComponent {
     this.ingresos = this.IngresoServicio.ingresos;
   }
 
-  eliminarRegistro(ingreso: Ingreso){
+  eliminarIngreso(ingreso: Ingreso){
     this.IngresoServicio.eliminar(ingreso);
   }
 }
