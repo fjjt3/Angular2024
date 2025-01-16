@@ -2,13 +2,15 @@
     <div class="container-fluid">
         <a class="navbar-brand" [routerLink]="['/']">Angular App</a>
     </div>
-    <!-- botón para dispositivos pequeños-->
+
+    <!-- boton de menu para dispositivos pequeños-->
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false"
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -16,11 +18,28 @@
                     [routerLinkActiveOptions]="{exact:true}"
                     aria-current="page">Inicio</a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/mostrar-mensaje']" routerLinkActive="active"
-                    routerLinkActive="active"
+                <a class="nav-link" [routerLink]="['/mostrar-mensaje']"
+                    routerLinkActive="active" 
                     [queryParams]="{mensaje:'Nuevo-mensaje'}">Mensaje</a>
             </li>
-        </ul>  
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">Opciones</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" [routerLink]="['/configuracion/padre']"
+                            routerLinkActive="active">Padre</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" [routerLink]="['/configuracion/hijo']"
+                            routerLinkActive="active">Hijo</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
     </div>
 </nav>
