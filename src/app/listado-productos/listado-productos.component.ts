@@ -23,9 +23,7 @@ export class ListadoProductosComponent {
 
   ngOnInit(){
     this.productos = this.productoService.productos;
-    this.productoService.detalleProductoEmitter.subscribe(
-      (producto: Producto) => alert(`Producto: ${producto.descripcion}, $${producto.precio}`) 
-    );
+    
   }
   
   agregarProducto(){

@@ -6,5 +6,5 @@ export const routes: Routes = [
     {path:'', component: ListadoProductosComponent},
     {path:'listado', component: ListadoProductosComponent},
     {path:'agregar', component: FormularioComponent},
-    {path:'editar:id', component: FormularioComponent} 
+    {path:'editar/:id', component: FormularioComponent} 
 ];
