@@ -42,15 +42,32 @@ export class FormularioComponent {
     }
     const producto = new Producto (this.productoId, this.descriptionInput, this.precioInput);
     
- this.productoService.agregarProducto(producto);
+ this.productoService.guardarProducto(producto);
 
+    this.productoId = null;
     this.descriptionInput = '';
     this.precioInput = null;
   
+    this.limpiarFormulario();
+
     this.router.navigate(['/']);
 
   }
   cancelar(){
     this.router.navigate(['/']);
+  }
+
+  eliminarProducto(){
+    if (this.productoId !== null){
+        this.productoService.eliminarProducto(this.productoId);
+        this.limpiarFormulario();
+        this.router.navigate(['/']);
+
+    }
+  }
+  limpiarFormulario(){
+    this.productoId = null;
+    this.descriptionInput = '';
+    this.precioInput = null;
   }
 }
