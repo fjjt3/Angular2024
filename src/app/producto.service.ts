@@ -8,47 +8,45 @@ import { Subject } from 'rxjs';
 })
 export class ProductoService {
 
-  
-  productos: {[llave:string]:Producto} = {};
+  productos: { [llave: string]: Producto } = {};
 
-  productosActualizados = new Subject<{[llave:string]:Producto}>();
+  productosActualizados = new Subject<{ [llave: string]: Producto }>();
 
-  constructor(private datosServices: DatosService){}
+  constructor(private datosServices: DatosService) { }
 
-  listarProductos(){
+  listarProductos() {
     return this.datosServices.listarProductos();
   }
 
   guardarProducto(producto: Producto, llave: string | null = null) {
-      if (llave === null){
-        this.datosServices.guardarProducto(producto).subscribe(() =>{
-          this.refrescarProductos();
-        });
-;      }
-    }
-    private refrescarProductos(){
-      this.listarProductos().subscribe((productos: {[llave:string]:Producto}) => {
-        this.setProductos(productos);
+    if (llave === null) {
+      this.datosServices.agregarProducto(producto).subscribe(() => {
+        this.refrescarProductos();
       });
+    } else {
+      this.datosServices.modificarProducto(producto, llave).subscribe(() =>
+        this.refrescarProductos());
     }
+  }
 
-    setProductos(productos: {[llave:string]:Producto}){
-      this.productos = productos;
-      this.productosActualizados.next(this.productos);
-    }
+  private refrescarProductos() {
+    this.listarProductos().subscribe((productos: { [llave: string]: Producto }) => {
+      this.setProductos(productos);
+    });
+  }
 
+  setProductos(productos: { [llave: string]: Producto }) {
+    this.productos = productos;
+    this.productosActualizados.next(this.productos);
+  }
 
+  getProductoByLlave(llave: string): Producto | undefined {
+    return this.productos[llave];
+  }
 
-    getProductoByLlave(llave:string): Producto | undefined{
-      return undefined;
-      // return this.productos.find(producto => producto.id === id);
-    }
-
-    eliminarProducto(id:number){
-      /* const indice = this.productos.findIndex(producto => producto.id = id);
-      if (indice !== -1){
-        this.productos.splice(indice, 1);
-      } */
-    }
-
+  eliminarProducto(llave :string) {
+    this.datosServices.eliminarProducto(llave).subscribe(()=>{
+      this.refrescarProductos();
+    });
+  }
 }
