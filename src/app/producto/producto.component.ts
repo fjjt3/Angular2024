@@ -16,8 +16,8 @@ export class ProductoComponent {
 
   constructor(private router: Router){}
 
-  editarProducto(id: number){
-    this.router.navigate(['/editar', id])
+  editarProducto(){
+    this.router.navigate(['/editar', this.llave])
   }
 
   

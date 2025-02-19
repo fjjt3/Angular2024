@@ -12,62 +12,68 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
-  productoId: number | null = null;
-  descriptionInput: string = '';
+  llaveProducto: string | null = null;
+  descripcionInput: string = '';
   precioInput: number | null = null;
 
   constructor(private productoService: ProductoService,
     private router: Router,
     private route: ActivatedRoute
-    
   ){}
 
   ngOnInit(){
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
-      const producto = this.productoService.getProductoById(Number(id));
+    // Verificamos si debemos cargar un producto ya existente
+    const llave = this.route.snapshot.paramMap.get('llave');
+    if(llave){
+      const producto = this.productoService.getProductoByLlave(llave);
       if(producto){
-        this.productoId = producto.id;
-        this.descriptionInput = producto.descripcion;
+        // Si encontramos el producto lo cargamos en el formulario
+        this.llaveProducto = llave;
+        this.descripcionInput = producto.descripcion;
         this.precioInput = producto.precio;
       }
     }
   }
-
+  
   guardarProducto(evento: Event){
     evento.preventDefault();
-    if(this.descriptionInput.trim() === '' || this.precioInput == null || this.precioInput <=0){
-      console.log('Debe ingresar una descrpción y precio valido');
+    
+    //Validar que sean valores correcto
+    if(this.descripcionInput.trim() === '' 
+      || this.precioInput == null || this.precioInput <=0){
+      console.log('Debe ingresar una descripción y un precio válidos');
       return;
     }
-    const producto = new Producto (this.productoId, this.descriptionInput, this.precioInput);
-    
- this.productoService.guardarProducto(producto);
 
-    this.productoId = null;
-    this.descriptionInput = '';
-    this.precioInput = null;
-  
-    this.limpiarFormulario();
+    const producto = new Producto(this.descripcionInput, this.precioInput);
 
+    // Agregamos el nuevo producto usando el servicio
+    this.productoService.guardarProducto(producto, this.llaveProducto);
+
+    // Limpiamos los campos del formulario
+    this.limpiarFormulario()
+
+    // Redirigir al inicio
     this.router.navigate(['/']);
 
   }
+
   cancelar(){
+    // Redirigimos al inicio
     this.router.navigate(['/']);
   }
 
   eliminarProducto(){
-    if (this.productoId !== null){
-        this.productoService.eliminarProducto(this.productoId);
-        this.limpiarFormulario();
-        this.router.navigate(['/']);
-
+    if(this.llaveProducto !== null){
+//      this.productoService.eliminarProducto(this.productoId);
+      this.limpiarFormulario();
+      this.router.navigate(['/']);
     }
   }
+
   limpiarFormulario(){
-    this.productoId = null;
-    this.descriptionInput = '';
+    this.llaveProducto = null;
+    this.descripcionInput = '';
     this.precioInput = null;
   }
 }

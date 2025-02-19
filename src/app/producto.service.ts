@@ -16,19 +16,15 @@ export class ProductoService {
     return this.datosServices.listarProductos();
   }
 
-  guardarProducto(producto: Producto) {
-      /* if (producto.id === null){
-        producto.id = this.idSiguiente++;
-        this.productos.push(producto);
-      } else {
-        const indice = this.productos.findIndex(p => p.id === producto.id);
-        if(indice != -1){
-          this.productos[indice] = producto;
-        }
-      } */
+  guardarProducto(producto: Producto, llave: string | null = null) {
+      if (llave === null){
+        this.datosServices.guardarProducto(producto).subscribe(() =>{
+          console.log(`Se agrego el nuevo producto: ${producto.descripcion} - ${producto.precio}`);
+        });
+;      }
     }
 
-    getProductoById(id:number): Producto | undefined{
+    getProductoByLlave(llave:string): Producto | undefined{
       return undefined;
       // return this.productos.find(producto => producto.id === id);
     }
