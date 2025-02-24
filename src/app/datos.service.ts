@@ -21,16 +21,20 @@ export class DatosService {
   }
 
   agregarProducto(producto: Producto): Observable<any>{
-    return this.httpClient.post(`${this.url}datos.json`, producto);
+    const token = this.loginService.getIdToken();
+    const url_agregar = `${this.url}datos.json?auth=${token}`
+    return this.httpClient.post(url_agregar, producto);
   }
 
   modificarProducto(producto: Producto, llave: string): Observable<any>{
-    const url_modificar = `${this.url}datos/${llave}.json`;
+    const token = this.loginService.getIdToken();
+    const url_modificar = `${this.url}datos/${llave}.json?auth=${token}`;
     return this.httpClient.put(url_modificar, producto);
   }
 
   eliminarProducto(llave: string): Observable<any>{
-    const url_eliminar = `${this.url}datos/${llave}.json`;
+    const token = this.loginService.getIdToken();
+    const url_eliminar = `${this.url}datos/${llave}.json?auth=${token}`;
     return this.httpClient.delete(url_eliminar);
   }
 
